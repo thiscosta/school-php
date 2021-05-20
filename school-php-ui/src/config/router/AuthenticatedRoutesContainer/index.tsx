@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router";
 import { Container, Dropdown, Menu } from "semantic-ui-react";
-import Home from "../../../screens/Home";
-import Students from "../../../screens/Students";
+import Home from "@screens/Home";
+import Students from "@screens/Students";
 
 const AuthenticatedRoutesContainer: React.FC = () => {
   let match = useRouteMatch();

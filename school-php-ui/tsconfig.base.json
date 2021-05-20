@@ -1,13 +1,13 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@schoolApi/*": ["src/external/school-api/*"],
+      "@screens/*": ["src/screens/*"],
+      "@config/*": ["src/config/*"]
+    },
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,8 +21,5 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx"
-  },
-  "include": [
-    "src"
-  ]
+  }
 }
