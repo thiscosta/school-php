@@ -4,7 +4,9 @@
     "paths": {
       "@schoolApi/*": ["src/external/school-api/*"],
       "@screens/*": ["src/screens/*"],
-      "@config/*": ["src/config/*"]
+      "@config/*": ["src/config/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@stores/*": ["src/stores/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

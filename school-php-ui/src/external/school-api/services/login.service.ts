@@ -5,7 +5,7 @@ interface ILoginService {
   login(request: LoginRequest): Promise<LoginResponse>;
 }
 
-export default class LoginService extends Service implements ILoginService {
+export class LoginService extends Service implements ILoginService {
   async login(request: LoginRequest): Promise<LoginResponse> {
     try {
       const response = await this.api.post("/login", request);
@@ -19,3 +19,5 @@ export default class LoginService extends Service implements ILoginService {
     }
   }
 }
+
+export default new LoginService()
