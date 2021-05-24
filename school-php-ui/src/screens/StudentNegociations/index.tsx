@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Icon, Table, Grid, Popup } from "semantic-ui-react";
 import ListHeader from "src/components/ListHeader";
-import UpsertStudents from "./components/UpsertStudents";
+import UpsertStudentNegotiations from "./components/UpsertStudentNegotiations";
 
-const Students: React.FC = () => {
+const StudentsNegotiations: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const changeIsOpen = () => {
@@ -13,38 +13,36 @@ const Students: React.FC = () => {
   return (
     <Grid>
       <ListHeader
-        description="Visualizar, adicione ou edite"
-        title="Alunos"
-        icon="user circle outline"
+        description="Proponha e gerencia suas negociações"
+        title="Negociações"
+        icon="money bill alternate outline"
       />
       <Table basic celled>
         <Table.Header fullWidth>
           <Table.Row>
             <Table.HeaderCell>ID</Table.HeaderCell>
-            <Table.HeaderCell>Nome</Table.HeaderCell>
-            <Table.HeaderCell>E-mail</Table.HeaderCell>
             <Table.HeaderCell>Curso</Table.HeaderCell>
             <Table.HeaderCell>Semestre</Table.HeaderCell>
-            <Table.HeaderCell>Responsável</Table.HeaderCell>
-            <Table.HeaderCell>#</Table.HeaderCell>
+            <Table.HeaderCell>Mês</Table.HeaderCell>
+            <Table.HeaderCell>Proposta</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
           <Table.Row>
             <Table.Cell>1</Table.Cell>
-            <Table.Cell>Aluno</Table.Cell>
-            <Table.Cell>aluno@email.com</Table.Cell>
-            <Table.Cell>Sistemas de informação</Table.Cell>
-            <Table.Cell>7º</Table.Cell>
-            <Table.Cell>Responsável</Table.Cell>
+            <Table.Cell>Curso</Table.Cell>
+            <Table.Cell>Semestre</Table.Cell>
+            <Table.Cell>Mês</Table.Cell>
+            <Table.Cell>Proposta</Table.Cell>
             <Table.Cell>
               <Button.Group>
-                <Button icon="edit" primary onClick={changeIsOpen}></Button>
+                <Button icon="edit" primary onClick={changeIsOpen} />
                 <Button.Or text="ou" />
                 <Popup
                   trigger={<Button icon="remove" color="red" />}
-                  content={<Button color="red" content="Excluir aluno" />}
+                  content={<Button color="red" content="Excluir negociação" />}
                   on="click"
                   position="top right"
                 />
@@ -55,7 +53,7 @@ const Students: React.FC = () => {
 
         <Table.Footer fullWidth>
           <Table.Row>
-            <Table.HeaderCell colSpan="7">
+            <Table.HeaderCell colSpan="6">
               <Button
                 floated="left"
                 icon
@@ -64,15 +62,15 @@ const Students: React.FC = () => {
                 size="small"
                 onClick={changeIsOpen}
               >
-                <Icon name="user" /> Adicionar aluno
+                <Icon name="dollar sign" /> Propor nova negociação
               </Button>
             </Table.HeaderCell>
           </Table.Row>
         </Table.Footer>
       </Table>
-      <UpsertStudents open={open} setOpen={changeIsOpen} />
+      <UpsertStudentNegotiations open={open} setOpen={changeIsOpen} />
     </Grid>
   );
 };
 
-export default Students;
+export default StudentsNegotiations;
