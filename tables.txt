@@ -1,0 +1,44 @@
+Deals
+- Aluno (tabela)
+- Escola (tabela)
+- Dívida (tabela)
+- Proposta (texto)
+- Curso
+- Semestre
+- Mês
+- Accepted (Boolean)
+- Finished (Boolean)
+
+Debt
+- Aluno (tabela)
+- Escola (tabela)
+- Curso
+- Semestre
+- Mês
+- Valor
+- Status
+
+Escola
+- User (tabela)
+- Nome
+
+Sponsor
+- User (tabela)
+- Nome
+
+Students
+- User (tabela)
+- Nome
+- Email
+- Curso 
+- Semestre
+- Responsavel (tabela)
+- Escola (tabela)
+
+User
+- Email
+- Password
+- Profile
+
+
+   
