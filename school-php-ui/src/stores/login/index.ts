@@ -13,8 +13,8 @@ const initialState: LoginState = {
   token: "",
 };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const loginSlice = createSlice({
+  name: "login",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -30,4 +30,4 @@ export const counterSlice = createSlice({
   },
 });
 
-export default counterSlice.reducer;
+export default loginSlice.reducer;

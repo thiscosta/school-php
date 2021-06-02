@@ -9,7 +9,7 @@ const createAxiosInstance = (): AxiosInstance => {
     timeout: 5000,
   });
   if (process.env.REACT_APP_ENVIRONMENT === "mock") {
-    const mock = new MockAdapter(axiosInstance);
+    const mock = new MockAdapter(axiosInstance, { delayResponse: 3000 });
     mocks.forEach((mockMethod) => mockMethod(mock));
   }
   return axiosInstance;
