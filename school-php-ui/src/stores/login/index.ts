@@ -23,7 +23,7 @@ export const loginSlice = createSlice({
       state.logged = false;
     });
     builder.addCase(login.fulfilled, (state, action) => {
-      //state.logging = false;
+      state.logging = false;
       state.logged = true;
       state.token = action.payload.token;
     });

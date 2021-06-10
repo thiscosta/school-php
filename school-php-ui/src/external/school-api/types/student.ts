@@ -1,7 +1,7 @@
 import { IAuthenticatedRequest, IResponse } from "./http";
 
 export interface Student {
-  id: number;
+  id?: number;
   name: string;
   email: string,
   course: string;
@@ -16,7 +16,7 @@ export interface ListStudentResponse extends IResponse {
 }
 
 export interface CreateStudentRequest extends IAuthenticatedRequest {
-  student: Student;
+  student?: Student;
 }
 
 export interface CreateStudentResponse extends IResponse {

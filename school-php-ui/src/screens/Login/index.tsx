@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Form,
@@ -12,9 +12,16 @@ import { useAppSelector, useAppDispatch } from "@hooks/index";
 import { login } from "@stores/login/thunk";
 
 const Login: React.FC = () => {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   const logging = useAppSelector((state) => state.login.logging);
-  const token = useAppSelector((state) => state.login.token);
   const dispatch = useAppDispatch();
+
+  const doLogin = () => {
+    dispatch(login({ email, password }))
+  }
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
@@ -27,6 +34,8 @@ const Login: React.FC = () => {
               icon="user"
               iconPosition="left"
               placeholder="E-mail"
+              value={email}
+              onChange={(_e, { value }) => setEmail(value)}
             />
             <Form.Input
               fluid
@@ -34,22 +43,11 @@ const Login: React.FC = () => {
               iconPosition="left"
               placeholder="Senha"
               type="password"
+              value={password}
+              onChange={(_e, { value }) => setPassword(value)}
             />
-            {token}
-            {logging ? "true" : "false"}
             {logging && <Loader active inline />}
-            <div>
-              <button
-                aria-label="Increment value"
-                onClick={() =>
-                  dispatch(login({ email: "teste", password: "teste" }))
-                }
-              >
-                Increment
-              </button>
-            </div>
-
-            <Button color="blue" fluid size="large">
+            <Button color="blue" fluid size="large" onClick={doLogin}>
               Login
             </Button>
           </Segment>

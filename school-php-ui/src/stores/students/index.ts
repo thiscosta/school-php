@@ -6,6 +6,7 @@ import {
   updateStudent,
   deleteStudent,
 } from "@stores/students/thunk";
+import { notify } from "react-notify-toast";
 
 interface StudentState {
   finding: boolean;
@@ -55,11 +56,11 @@ export const studentSlice = createSlice({
       state.creating = false;
       state.created = true;
       state.students = [...state.students, { ...action.payload.student }];
+      notify.show('Aluno criado com sucesso', 'success', 2000)
     });
-    builder.addCase(updateStudent.pending, (state, { payload }: any) => {
+    builder.addCase(updateStudent.pending, (state) => {
       state.updating = true;
       state.updated = false;
-      state.editingStudent = { ...payload.student };
     });
     builder.addCase(updateStudent.fulfilled, (state, action) => {
       state.updating = false;
@@ -72,6 +73,7 @@ export const studentSlice = createSlice({
             : student
         ),
       ];
+      notify.show('Aluno atualizado com sucesso', 'success', 2000)
     });
     builder.addCase(deleteStudent.pending, (state) => {
       state.removing = true;
@@ -83,6 +85,7 @@ export const studentSlice = createSlice({
       state.students = [
         ...state.students.filter((student) => student.id !== action.payload.id),
       ];
+      notify.show('Aluno excluído com sucesso', 'success', 2000)
     });
   },
 });

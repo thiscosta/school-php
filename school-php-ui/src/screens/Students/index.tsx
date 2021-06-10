@@ -40,7 +40,7 @@ const Students: React.FC = () => {
   };
 
   const removeStudent = (student: Student) => {
-    dispatch(deleteStudent({ id: student.id, token }));
+    dispatch(deleteStudent({ id: student.id!, token }));
   };
 
   return (
