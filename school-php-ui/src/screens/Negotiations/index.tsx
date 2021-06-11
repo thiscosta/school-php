@@ -1,8 +1,40 @@
-import React from "react";
-import { Button, Table, Grid, Popup } from "semantic-ui-react";
-import ListHeader from "src/components/ListHeader";
+import { useAppDispatch } from "@hooks/index";
+import { useAppSelector } from "@hooks/index";
+import {
+  listNegotiations,
+} from "@stores/negotiations/thunk";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Table,
+  Grid,
+  Popup,
+  Loader,
+  Segment,
+  Dimmer,
+} from "semantic-ui-react";
+import ListHeader from "@components/ListHeader";
+import { selectNegotiation } from "@stores/negotiations";
 
 const Negotiations: React.FC = () => {
+  const [open, setOpen] = useState(false);
+  const finding = useAppSelector((state) => state.negotiations.finding);
+  const token = useAppSelector((state) => state.login.token);
+  const negotiations = useAppSelector(
+    (state) => state.negotiations.negotiations
+  );
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(listNegotiations({ token }));
+  }, []);
+
+  const unselectNegotiation = () => {
+    dispatch(selectNegotiation(null));
+    setOpen(!open);
+  };
+
   return (
     <Grid>
       <ListHeader
@@ -10,47 +42,57 @@ const Negotiations: React.FC = () => {
         title="Negociações"
         icon="money bill alternate outline"
       />
-      <Table basic celled>
-        <Table.Header fullWidth>
-          <Table.Row>
-            <Table.HeaderCell>ID</Table.HeaderCell>
-            <Table.HeaderCell>Aluno</Table.HeaderCell>
-            <Table.HeaderCell>Responsável</Table.HeaderCell>
-            <Table.HeaderCell>Proposta</Table.HeaderCell>
-            <Table.HeaderCell>#</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+      {finding ? (
+        <Segment style={{ width: "100vw", height: "20vh" }}>
+          <Dimmer active inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
+        </Segment>
+      ) : (
+        <Table basic celled>
+          <Table.Header fullWidth>
+            <Table.Row>
+              <Table.HeaderCell>ID</Table.HeaderCell>
+              <Table.HeaderCell>Aluno</Table.HeaderCell>
+              <Table.HeaderCell>Dívida</Table.HeaderCell>
+              <Table.HeaderCell>Proposta</Table.HeaderCell>
+              <Table.HeaderCell>#</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>1</Table.Cell>
-            <Table.Cell>Aluno</Table.Cell>
-            <Table.Cell>Responsável</Table.Cell>
-            <Table.Cell>Proposta</Table.Cell>
-            <Table.Cell>
-              <Button.Group>
-                <Popup
-                  trigger={<Button positive>Aceitar</Button>}
-                  content={
-                    <Button color="green" content="Confirmar a proposta" />
-                  }
-                  on="click"
-                  position="top right"
-                />
-                <Button.Or text="ou" />
-                <Popup
-                  trigger={<Button color="red">Recusar</Button>}
-                  content={
-                    <Button color="red" content="Recusar proposta" />
-                  }
-                  on="click"
-                  position="top right"
-                />
-              </Button.Group>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+          <Table.Body>
+            {negotiations.map((negotiation, index) => (
+              <Table.Row key={index}>
+                <Table.Cell>{negotiation.id}</Table.Cell>
+                <Table.Cell>{negotiation.student}</Table.Cell>
+                <Table.Cell>{negotiation.debt}</Table.Cell>
+                <Table.Cell>{negotiation.proposal}</Table.Cell>
+                <Table.Cell>
+                  <Button.Group>
+                    <Popup
+                      trigger={<Button positive>Aceitar</Button>}
+                      content={
+                        <Button color="green" content="Confirmar a proposta" />
+                      }
+                      on="click"
+                      position="top right"
+                    />
+                    <Button.Or text="ou" />
+                    <Popup
+                      trigger={<Button color="red">Recusar</Button>}
+                      content={
+                        <Button color="red" content="Recusar proposta" />
+                      }
+                      on="click"
+                      position="top right"
+                    />
+                  </Button.Group>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      )}
     </Grid>
   );
 };

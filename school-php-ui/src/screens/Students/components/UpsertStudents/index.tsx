@@ -10,6 +10,7 @@ interface UpsertStudentsProps {
 
 const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
   const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [course, setCourse] = useState("");
   const [semester, setSemester] = useState("");
@@ -40,7 +41,7 @@ const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
   }, [student]);
 
   const handleConfirm = async () => {
-    const modifiedStudent = { name, email, course, responsible, semester };
+    const modifiedStudent = { ...student, name, email, course, responsible, semester, ...(!student && { password }) };
     const action  = student ? updateStudent : createStudent
     dispatch(action({ student: modifiedStudent, token: "123", }))
     setOpen();
@@ -69,6 +70,15 @@ const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
                 setEmail(value);
               }}
             />
+            {!student && (<Form.Input
+              type="password"
+              label="Senha"
+              placeholder="Senha"
+              value={password}
+              onChange={(_e, { value }) => {
+                setPassword(value);
+              }}
+            />)}
           </Form.Group>
           <Form.Group widths={3}>
             <Form.Input
