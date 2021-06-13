@@ -15,7 +15,9 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Student::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     
         $faker = \Faker\Factory::create();
         $usersIds = DB::table('users')->pluck('id');

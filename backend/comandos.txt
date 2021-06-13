@@ -1,3 +1,21 @@
+Criar Model
+php artisan make:model Sponsor -m
+
+Criar Migration (quando cria Model, é criado automaticamente)
+php artisan make:migration create_sponsors_table
+
+Criar Seeder
+php artisan make:seeder SponsorsTableSeeder
+
+Criar Controller
+php artisan make:controller SponsorController
+
+(Não esquecer de preencher a rota em routes/api.php)
+(Não esquecer de colocar a Seeder no DatabaseSeeder)
+
+Excluir tabelas
+php artisan migrate:rollback
+
+Criar tabelas e preencher as tabelas
 php artisan migrate
 php artisan db:seed
-php artisan migrate:rollback

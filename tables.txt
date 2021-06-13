@@ -1,22 +1,18 @@
-Deals
+Negotiation
 - Aluno (tabela)
-- Escola (tabela)
 - Dívida (tabela)
-- Proposta (texto)
-- Curso
-- Semestre
-- Mês
+- Proposta (tsponexto)
 - Accepted (Boolean)
 - Finished (Boolean)
 
 Debt
-- Aluno (tabela)
-- Escola (tabela)
 - Curso
 - Semestre
 - Mês
 - Valor
 - Status
+- Aluno (tabela)
+- Escola (tabela)
 
 Escola
 - User (tabela)
@@ -41,4 +37,3 @@ User
 - Profile
 
 
-   
