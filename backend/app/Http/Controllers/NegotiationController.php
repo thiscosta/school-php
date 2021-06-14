@@ -25,7 +25,19 @@ class NegotiationController extends Controller
     }
 
     public function get($id){
-        return Negotiation::with('student', 'debt')->find($id);
+        $user = Auth::user();
+        
+        if($user->profile == 'Admin') {
+            return Negotiation::with('student', 'debt')->find($id);
+        }else{
+            $negotiations = Negotiation::with('student', 'debt')
+            ->select('negotiations.*')
+            ->join('students', 'students.id', '=', 'negotiations.student_id')
+            ->join('debts', 'debts.id', '=', 'negotiations.debt_id')
+            ->where('students.id', '=', $id)
+            ->get();
+            return $negotiations;
+        }
     }
 
     public function create(Request $request) {
