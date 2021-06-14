@@ -4,11 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Negotiation;
+use Illuminate\Support\Facades\Auth;
 
 class NegotiationController extends Controller
 {
     public function getAll(){
-        return Negotiation::with('student', 'debt')->get();
+        $user = Auth::user();
+        
+        if($user->profile == 'Admin') {
+            return Negotiation::with('student', 'debt')->get();
+        }else{
+            $negotiations = Negotiation::with('student', 'debt')
+            ->select('negotiations.*')
+            ->join('students', 'students.id', '=', 'negotiations.student_id')
+            ->join('debts', 'debts.id', '=', 'negotiations.debt_id')
+            ->where('students.user_id', '=', $user->id)
+            ->get();
+            return $negotiations;
+        }
     }
 
     public function get($id){

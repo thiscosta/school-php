@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Debt;
 use Illuminate\Support\Facades\Auth;
-use DB;
 
 class DebtController extends Controller
 {
@@ -19,7 +18,7 @@ class DebtController extends Controller
             ->select('debts.*')
             ->join('students', 'students.id', '=', 'debts.student_id')
             ->join('schools', 'schools.id', '=', 'debts.school_id')
-            ->where('students.user_id', '=', $user->$id)
+            ->where('students.user_id', '=', $user->id)
             ->get();
             return $debts;
         }
