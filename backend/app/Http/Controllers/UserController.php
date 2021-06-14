@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function getAll(){
+        $user = Auth::user();
         return User::with('students')->get();
     }
 

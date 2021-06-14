@@ -15,7 +15,7 @@ class CreateNegotiationsTable extends Migration
     {
         Schema::create('negotiations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('proposal', 5, 2);
+            $table->string('proposal');
             $table->boolean('accepted');
             $table->boolean('finished');
             $table->unsignedBigInteger('student_id');
