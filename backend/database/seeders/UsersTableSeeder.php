@@ -21,12 +21,21 @@ class UsersTableSeeder extends Seeder
     
         $faker = \Faker\Factory::create();
 
+        User::create([
+            'name' => $faker->name,
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('admin'),
+            'profile' => 'Admin',
+            'api_token' => ''
+        ]);
+
         for ($i = 0; $i < 20; $i++) {
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
-                'password' => $faker->password,
-                'profile' => 'Administrator'
+                'password' => bcrypt($faker->password),
+                'profile' => 'User',
+                'api_token' => ''
             ]);
         }
     }

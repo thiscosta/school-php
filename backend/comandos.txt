@@ -19,3 +19,10 @@ php artisan migrate:rollback
 Criar tabelas e preencher as tabelas
 php artisan migrate
 php artisan db:seed
+
+
+
+
+Run composer require laravel/passport
+Run php artisan passport:install from command line
+php artisan passport:client --personal

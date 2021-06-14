@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Debt;
+use Illuminate\Support\Facades\Auth;
+use DB;
 
 class DebtController extends Controller
 {
     public function getAll(){
-        return Debt::with('student', 'school')->get();
+        $user = Auth::user();
+        
+        if($user->profile == 'Admin') {
+            return Debt::with('student', 'school')->get();
+        }else{
+            $debts = DB::table('debts')->where('student_id', '=', 1)->get();
+            return $debts;
+        }
     }
 
     public function get($id){
