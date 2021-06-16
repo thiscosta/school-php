@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -10,18 +10,27 @@ import {
 } from "semantic-ui-react";
 import { useAppSelector, useAppDispatch } from "@hooks/index";
 import { login } from "@stores/login/thunk";
+import { useHistory } from "react-router-dom";
 
 const Login: React.FC = () => {
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const logging = useAppSelector((state) => state.login.logging);
+  const token = useAppSelector((state) => state.login.token);
+
   const dispatch = useAppDispatch();
 
   const doLogin = () => {
-    dispatch(login({ email, password }))
-  }
+    dispatch(login({ email, password }));
+  };
+
+  useEffect(() => {
+    if (!logging && token) {
+      history.push("/");
+    }
+  }, [logging, token]);
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
