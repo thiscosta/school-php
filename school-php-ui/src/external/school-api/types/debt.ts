@@ -2,12 +2,27 @@ import { IAuthenticatedRequest, IResponse } from "./http";
 
 export interface Debt {
   id?: number;
-  student: string;
+  student?: {
+    id: number;
+    name: string;
+    email: string;
+    course: string;
+    semester: string;
+    responsible: string;
+    user_id: number;
+  };
   course: string;
-  semester: string;
-  month: string;
+  semester: number;
+  month: number;
   value: string;
-  status: string;
+  status: string
+  student_id: number;
+  school_id: number;
+  school?: {
+    id: number;
+    name: string;
+    user_id: number;
+  }
 }
 
 export interface ListDebtRequest extends IAuthenticatedRequest {}

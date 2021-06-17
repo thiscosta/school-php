@@ -16,6 +16,7 @@ import ListHeader from "@components/ListHeader";
 import UpsertDebts from "./components/UpsertDebts";
 import { Debt } from "@schoolApi/types/debt";
 import { selectDebt } from "@stores/debts";
+import { listStudents } from "@stores/students/thunk";
 
 const Debts: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,7 @@ const Debts: React.FC = () => {
 
   useEffect(() => {
     dispatch(listDebts({ token }));
+    dispatch(listStudents({ token }))
   }, []);
 
   const unselectDebt = () => {
@@ -75,7 +77,7 @@ const Debts: React.FC = () => {
             {debts.map((debt, index) => (
               <Table.Row key={index}>
                 <Table.Cell>{debt.id}</Table.Cell>
-                <Table.Cell>{debt.student}</Table.Cell>
+                <Table.Cell>{debt.student?.name}</Table.Cell>
                 <Table.Cell>{debt.course}</Table.Cell>
                 <Table.Cell>{debt.semester}</Table.Cell>
                 <Table.Cell>{debt.month}</Table.Cell>

@@ -19,7 +19,7 @@ const UpsertStudentNegotiations: React.FC<UpsertStudentNegotiationsProps> = ({ o
   useEffect(() => {
     function getInitialStudentNegotiationParams() {
       setProposal(studentNegotiation?.proposal!);
-      setDebt(studentNegotiation?.debt!);
+      setDebt(studentNegotiation?.debt!.id.toString() || "");
     }
 
     getInitialStudentNegotiationParams();
@@ -34,11 +34,12 @@ const UpsertStudentNegotiations: React.FC<UpsertStudentNegotiationsProps> = ({ o
     const modifiedStudentNegotiation = {
       ...studentNegotiation,
       proposal,
-      debt,
-      student: '123'
+      debt_id: Number(debt),
+      accepted: false,
+      finished: false,
     };
     const action = studentNegotiation ? updateStudentNegotiation : createStudentNegotiation;
-    dispatch(action({ negotiation: modifiedStudentNegotiation, token: "123" }));
+    dispatch(action({ negotiation: modifiedStudentNegotiation, token }));
     setOpen();
   };
 
@@ -57,8 +58,8 @@ const UpsertStudentNegotiations: React.FC<UpsertStudentNegotiationsProps> = ({ o
               }}
             />
             <Form.Input
-              label="Semestre"
-              placeholder="Semestre"
+              label="Proposta"
+              placeholder="Proposta"
               value={proposal}
               onChange={(_e, { value }) => {
                 setProposal(value);

@@ -7,6 +7,13 @@ export interface Student {
   course: string;
   semester: string,
   responsible: string;
+  user_id?: string;
+  user?: {
+    id: number;
+    name: string;
+    email: string;
+    profile: string;
+  }
 }
 
 export interface ListStudentRequest extends IAuthenticatedRequest {}

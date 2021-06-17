@@ -17,6 +17,7 @@ interface StudentState {
   removing: boolean;
   removed: boolean;
   students: Student[];
+  dropdownStudents: any[];
   editingStudent: Student | null;
 }
 
@@ -29,6 +30,7 @@ const initialState: StudentState = {
   removing: false,
   removed: false,
   students: [],
+  dropdownStudents: [],
   editingStudent: null,
 };
 
@@ -47,6 +49,13 @@ export const studentSlice = createSlice({
     builder.addCase(listStudents.fulfilled, (state, action) => {
       state.finding = false;
       state.students = [...action.payload.students];
+      state.dropdownStudents = [...action.payload.students.map(student => {
+        return {
+          key: student.id,
+          value: student.id,
+          text: student.user?.name
+        }
+      })]
     });
     builder.addCase(createStudent.pending, (state) => {
       state.creating = true;

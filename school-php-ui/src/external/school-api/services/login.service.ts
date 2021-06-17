@@ -12,6 +12,7 @@ export class LoginService extends Service implements ILoginService {
       return {
         ...this.parseAxiosResponse(response),
         token: response.data.token,
+        user: {...response.data.user}
       };
     } catch (err) {
       console.log("Error: ", err);

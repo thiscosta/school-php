@@ -64,8 +64,8 @@ const Negotiations: React.FC = () => {
             {negotiations.map((negotiation, index) => (
               <Table.Row key={index}>
                 <Table.Cell>{negotiation.id}</Table.Cell>
-                <Table.Cell>{negotiation.student}</Table.Cell>
-                <Table.Cell>{negotiation.debt}</Table.Cell>
+                <Table.Cell>{negotiation.student!.id + " - " + negotiation.student!.name}</Table.Cell>
+                <Table.Cell><b>{negotiation.debt?.course}</b> - {negotiation.debt?.semester + "º Semestre - R$" + negotiation.debt?.value}</Table.Cell>
                 <Table.Cell>{negotiation.proposal}</Table.Cell>
                 <Table.Cell>
                   <Button.Group>

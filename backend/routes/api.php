@@ -24,7 +24,7 @@ Route::delete('/students/{id}', [StudentController::class, 'delete'])->middlewar
 
 Route::get('/users', [UserController::class, 'getAll'])->middleware('auth:api');
 Route::get('/users/{id}', [UserController::class, 'get'])->middleware('auth:api');
-Route::post('/users', [UserController::class, 'create'])->middleware('auth:api');
+Route::post('/users', [UserController::class, 'create']);
 Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth:api');
 Route::delete('/users/{id}', [UserController::class, 'delete'])->middleware('auth:api');
 

@@ -43,7 +43,7 @@ const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
   const handleConfirm = async () => {
     const modifiedStudent = { ...student, name, email, course, responsible, semester, ...(!student && { password }) };
     const action  = student ? updateStudent : createStudent
-    dispatch(action({ student: modifiedStudent, token: "123", }))
+    dispatch(action({ student: modifiedStudent, token }))
     setOpen();
   };
 

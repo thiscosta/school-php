@@ -23,8 +23,8 @@ class UsersTableSeeder extends Seeder
 
         User::create([
             'name' => $faker->name,
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('admin'),
+            'email' => 'admin@email.com',
+            'password' => bcrypt('123'),
             'profile' => 'Admin',
             'api_token' => ''
         ]);

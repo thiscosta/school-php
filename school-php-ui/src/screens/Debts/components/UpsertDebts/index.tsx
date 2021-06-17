@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/index";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import { updateDebt, createDebt } from "@stores/debts/thunk";
+import { format } from "date-fns";
 
 interface UpsertDebtsProps {
   open: boolean;
@@ -9,7 +10,7 @@ interface UpsertDebtsProps {
 }
 
 const UpsertDebts: React.FC<UpsertDebtsProps> = ({ open, setOpen }) => {
-  const [student, setStudent] = useState("");
+  const [student, setStudent] = useState<number | null>();
   const [course, setCourse] = useState("");
   const [semester, setSemester] = useState("");
   const [month, setMonth] = useState("");
@@ -17,41 +18,45 @@ const UpsertDebts: React.FC<UpsertDebtsProps> = ({ open, setOpen }) => {
   const [status, setStatus] = useState("");
 
   const debt = useAppSelector((state) => state.debts.editingDebt);
+  const dropdownStudents = useAppSelector((state) => state.students.dropdownStudents);
   const token = useAppSelector((state) => state.login.token);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     function getInitialDebtParams() {
-      setStudent(debt?.student!);
+      setStudent(debt?.student!.id || null);
       setValue(debt?.value!);
       setCourse(debt?.course!);
-      setSemester(debt?.semester!);
+      setSemester(debt?.semester.toString() || "");
       setStatus(debt?.status!);
+      setMonth(debt?.month!.toString() || "1")
     }
 
     getInitialDebtParams();
 
     return () => {
-      setStudent("");
+      setStudent(null);
       setValue("");
       setCourse("");
       setSemester("");
       setStatus("");
+      setMonth("")
     };
   }, [debt]);
 
   const handleConfirm = async () => {
     const modifiedDebt = {
       ...debt,
-      student,
+      student_id: Number(student),
+      school_id: 1,
       value,
       course,
       status,
-      semester,
-      month,
+      semester: Number(semester),
+      month: Number(month),
     };
     const action = debt ? updateDebt : createDebt;
-    dispatch(action({ debt: modifiedDebt, token: "123" }));
+    dispatch(action({ debt: modifiedDebt, token }));
     setOpen();
   };
 
@@ -61,12 +66,13 @@ const UpsertDebts: React.FC<UpsertDebtsProps> = ({ open, setOpen }) => {
       <Modal.Content scrolling>
         <Form>
           <Form.Group unstackable widths={2}>
-            <Form.Input
+            <Form.Select
               label="Aluno"
               placeholder="Aluno"
-              value={student}
+              options={dropdownStudents}
+              value={student!}
               onChange={(_e, { value }) => {
-                setStudent(value);
+                setStudent(Number(value));
               }}
             />
             <Form.Input
@@ -88,7 +94,6 @@ const UpsertDebts: React.FC<UpsertDebtsProps> = ({ open, setOpen }) => {
           </Form.Group>
           <Form.Group widths={3}>
             <Form.Input
-              type="month"
               label="Mês"
               placeholder="Mês"
               value={month}

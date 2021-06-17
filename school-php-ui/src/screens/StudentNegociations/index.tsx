@@ -1,6 +1,9 @@
 import { useAppDispatch } from "@hooks/index";
 import { useAppSelector } from "@hooks/index";
-import { deleteStudentNegotiation, listStudentNegotiations } from "@stores/studentNegotiations/thunk";
+import {
+  deleteStudentNegotiation,
+  listStudentNegotiations,
+} from "@stores/studentNegotiations/thunk";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -21,7 +24,9 @@ const StudentNegotiations: React.FC = () => {
   const [open, setOpen] = useState(false);
   const finding = useAppSelector((state) => state.studentNegotiations.finding);
   const token = useAppSelector((state) => state.login.token);
-  const studentNegotiations = useAppSelector((state) => state.studentNegotiations.negotiations);
+  const studentNegotiations = useAppSelector(
+    (state) => state.studentNegotiations.negotiations
+  );
 
   const dispatch = useAppDispatch();
 
@@ -60,11 +65,11 @@ const StudentNegotiations: React.FC = () => {
         <Table basic celled>
           <Table.Header fullWidth>
             <Table.Row>
-            <Table.HeaderCell>ID</Table.HeaderCell>
-            <Table.HeaderCell>Dívida</Table.HeaderCell>
-            <Table.HeaderCell>Status</Table.HeaderCell>
-            <Table.HeaderCell>Proposta</Table.HeaderCell>
-            <Table.HeaderCell>#</Table.HeaderCell>
+              <Table.HeaderCell>ID</Table.HeaderCell>
+              <Table.HeaderCell>Dívida</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
+              <Table.HeaderCell>Proposta</Table.HeaderCell>
+              <Table.HeaderCell>#</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -72,9 +77,14 @@ const StudentNegotiations: React.FC = () => {
             {studentNegotiations.map((studentNegotiation, index) => (
               <Table.Row key={index}>
                 <Table.Cell>{studentNegotiation.id}</Table.Cell>
-                <Table.Cell>{studentNegotiation.debt}</Table.Cell>
-                <Table.Cell>{studentNegotiation.debt}</Table.Cell>
-                <Table.Cell>{studentNegotiation.debt}</Table.Cell>
+                <Table.Cell>
+                  <b>{studentNegotiation.debt?.course}</b> -{" "}
+                  {studentNegotiation.debt?.semester +
+                    "º Semestre - R$" +
+                    studentNegotiation.debt?.value}
+                </Table.Cell>
+                <Table.Cell>{studentNegotiation.debt?.status}</Table.Cell>
+                <Table.Cell>{studentNegotiation.proposal}</Table.Cell>
                 <Table.Cell>
                   <Button.Group>
                     <Button
@@ -124,7 +134,10 @@ const StudentNegotiations: React.FC = () => {
         </Table>
       )}
 
-      <UpsertStudentNegotiations open={open} setOpen={unselectStudentNegotiation} />
+      <UpsertStudentNegotiations
+        open={open}
+        setOpen={unselectStudentNegotiation}
+      />
     </Grid>
   );
 };

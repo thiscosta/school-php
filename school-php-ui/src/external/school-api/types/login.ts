@@ -7,4 +7,9 @@ export interface LoginRequest {
 
 export interface LoginResponse extends IResponse {
     token: string;
+    user: {
+        id: number;
+        name: string;
+        profile: string;
+    }
 }
