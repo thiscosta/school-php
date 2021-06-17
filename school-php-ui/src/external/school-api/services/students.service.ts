@@ -61,10 +61,14 @@ export class StudentService extends Service implements IStudentService {
     student,
   }: UpdateStudentRequest): Promise<UpdateStudentResponse> {
     try {
-      console.log(token)
       const response = await this.api.put(
         `/students/${student.id}`,
-        { ...student }
+        { ...student },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return {
         ...this.parseAxiosResponse(response),

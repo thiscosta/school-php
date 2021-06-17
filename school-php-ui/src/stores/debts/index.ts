@@ -18,6 +18,7 @@ interface DebtState {
   removed: boolean;
   debts: Debt[];
   editingDebt: Debt | null;
+  dropdownDebts: any[];
 }
 
 const initialState: DebtState = {
@@ -30,6 +31,7 @@ const initialState: DebtState = {
   removed: false,
   debts: [],
   editingDebt: null,
+  dropdownDebts: []
 };
 
 export const debtSlice = createSlice({
@@ -47,6 +49,13 @@ export const debtSlice = createSlice({
     builder.addCase(listDebts.fulfilled, (state, action) => {
       state.finding = false;
       state.debts = [...action.payload.debts];
+      state.dropdownDebts = [...state.debts.map(debt => {
+        return {
+          key: debt.id,
+          value: debt.id,
+          text: debt.id + " - " + debt.student?.name
+        }
+      })];
     });
     builder.addCase(listDebts.rejected, (state, action) => {
       state.finding = false;

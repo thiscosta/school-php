@@ -19,6 +19,7 @@ export const listDebts = createAsyncThunk<
     const response = await DebtService.list({ token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -31,6 +32,7 @@ export const createDebt = createAsyncThunk<
     const response = await DebtService.create({ debt, token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -43,6 +45,7 @@ export const updateDebt = createAsyncThunk<
     const response = await DebtService.update({ token, debt });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -55,6 +58,7 @@ export const deleteDebt = createAsyncThunk<
     const response = await DebtService.delete({ id, token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });

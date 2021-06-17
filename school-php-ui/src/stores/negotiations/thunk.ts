@@ -19,6 +19,7 @@ export const listNegotiations = createAsyncThunk<
     const response = await NegotiationService.list({ token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -31,6 +32,7 @@ export const createNegotiation = createAsyncThunk<
     const response = await NegotiationService.create({ negotiation, token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -43,6 +45,7 @@ export const updateNegotiation = createAsyncThunk<
     const response = await NegotiationService.update({ token, negotiation });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -55,6 +58,7 @@ export const deleteNegotiation = createAsyncThunk<
     const response = await NegotiationService.delete({ id, token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });

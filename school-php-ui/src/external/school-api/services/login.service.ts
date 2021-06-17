@@ -15,7 +15,7 @@ export class LoginService extends Service implements ILoginService {
         user: {...response.data.user}
       };
     } catch (err) {
-      console.log("Error: ", err);
+      console.log(err.response.data);
       throw err;
     }
   }

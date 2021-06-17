@@ -19,6 +19,7 @@ export const listStudents = createAsyncThunk<
     const response = await StudentService.list({ token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -31,6 +32,7 @@ export const createStudent = createAsyncThunk<
     const response = await StudentService.create({ student, token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -43,6 +45,7 @@ export const updateStudent = createAsyncThunk<
     const response = await StudentService.update({ token, student });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });
@@ -55,6 +58,7 @@ export const deleteStudent = createAsyncThunk<
     const response = await StudentService.delete({ id, token });
     return response;
   } catch (err) {
+    console.log(err.response.data);
     return rejectWithValue(err.response.data);
   }
 });

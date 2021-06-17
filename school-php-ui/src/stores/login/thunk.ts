@@ -13,3 +13,10 @@ export const login = createAsyncThunk<LoginResponse, LoginRequest>(
     }
   }
 );
+
+export const logout = createAsyncThunk(
+  "logout/logout",
+  async () => {
+      return undefined;
+  }
+);

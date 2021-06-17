@@ -61,10 +61,14 @@ export class DebtService extends Service implements IDebtService {
     debt,
   }: UpdateDebtRequest): Promise<UpdateDebtResponse> {
     try {
-      console.log(token)
       const response = await this.api.put(
         `/debts/${debt.id}`,
-        { ...debt }
+        { ...debt },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return {
         ...this.parseAxiosResponse(response),

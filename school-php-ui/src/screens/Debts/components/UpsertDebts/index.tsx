@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from "@hooks/index";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import { updateDebt, createDebt } from "@stores/debts/thunk";
-import { format } from "date-fns";
 
 interface UpsertDebtsProps {
   open: boolean;
@@ -63,7 +62,7 @@ const UpsertDebts: React.FC<UpsertDebtsProps> = ({ open, setOpen }) => {
   return (
     <Modal open={open} onClose={setOpen} onOpen={setOpen}>
       <Modal.Header>{debt?.id || "Nova dívida"}</Modal.Header>
-      <Modal.Content scrolling>
+      <Modal.Content>
         <Form>
           <Form.Group unstackable widths={2}>
             <Form.Select

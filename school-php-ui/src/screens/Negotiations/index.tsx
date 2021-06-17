@@ -15,6 +15,9 @@ import {
 } from "semantic-ui-react";
 import ListHeader from "@components/ListHeader";
 import { selectNegotiation } from "@stores/negotiations";
+import { Negotiation } from "@schoolApi/types/negotiation";
+import { updateNegotiation } from "@stores/negotiations/thunk";
+
 
 const Negotiations: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -33,6 +36,18 @@ const Negotiations: React.FC = () => {
   const unselectNegotiation = () => {
     dispatch(selectNegotiation(null));
     setOpen(!open);
+  };
+
+  const handleNegotiation = async (negotiation: Negotiation, accepted: boolean) => {
+    const modifiedNegotiation = {
+      ...negotiation,
+      accepted,
+      finished: true,
+    };
+
+    const action = updateNegotiation;
+    dispatch(action({ negotiation: modifiedNegotiation, token }));
+    setOpen(false);
   };
 
   return (
@@ -56,6 +71,7 @@ const Negotiations: React.FC = () => {
               <Table.HeaderCell>Aluno</Table.HeaderCell>
               <Table.HeaderCell>Dívida</Table.HeaderCell>
               <Table.HeaderCell>Proposta</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
               <Table.HeaderCell>#</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -67,21 +83,31 @@ const Negotiations: React.FC = () => {
                 <Table.Cell>{negotiation.student!.id + " - " + negotiation.student!.name}</Table.Cell>
                 <Table.Cell><b>{negotiation.debt?.course}</b> - {negotiation.debt?.semester + "º Semestre - R$" + negotiation.debt?.value}</Table.Cell>
                 <Table.Cell>{negotiation.proposal}</Table.Cell>
+                <Table.Cell>{negotiation.accepted ? "Aceita" : "Recusada"}</Table.Cell>
+
                 <Table.Cell>
                   <Button.Group>
                     <Popup
-                      trigger={<Button positive>Aceitar</Button>}
+                      trigger={<Button positive disabled={negotiation.finished}>Aceitar</Button>}
                       content={
-                        <Button color="green" content="Confirmar a proposta" />
+                        <Button color="green" content="Confirmar a proposta" 
+                        onClick={() => {
+                          handleNegotiation(negotiation, true);
+                        }}
+                        />
                       }
                       on="click"
                       position="top right"
                     />
                     <Button.Or text="ou" />
                     <Popup
-                      trigger={<Button color="red">Recusar</Button>}
+                      trigger={<Button color="red" disabled={negotiation.finished}>Recusar</Button>}
                       content={
-                        <Button color="red" content="Recusar proposta" />
+                        <Button color="red" content="Recusar proposta" 
+                        onClick={() => {
+                          handleNegotiation(negotiation, false);
+                        }}
+                        />
                       }
                       on="click"
                       position="top right"

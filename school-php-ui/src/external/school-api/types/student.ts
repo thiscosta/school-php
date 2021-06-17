@@ -7,6 +7,12 @@ export interface Student {
   course: string;
   semester: string,
   responsible: string;
+  zipcode: string;
+  number: string;
+  street: string;
+  neighborhood: string;
+  city: string;
+  state: string;
   user_id?: string;
   user?: {
     id: number;

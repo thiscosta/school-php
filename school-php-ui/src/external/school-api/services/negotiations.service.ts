@@ -61,10 +61,14 @@ export class NegotiationService extends Service implements INegotiationService {
     negotiation,
   }: UpdateNegotiationRequest): Promise<UpdateNegotiationResponse> {
     try {
-      console.log(token)
       const response = await this.api.put(
         `/negotiations/${negotiation.id}`,
-        { ...negotiation }
+        { ...negotiation },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return {
         ...this.parseAxiosResponse(response),

@@ -19,6 +19,9 @@ import ListHeader from "@components/ListHeader";
 import UpsertStudentNegotiations from "./components/UpsertStudentNegotiations";
 import { Negotiation } from "@schoolApi/types/negotiation";
 import { selectStudentNegotiation } from "@stores/studentNegotiations";
+import { listStudents } from "@stores/students/thunk";
+import { listDebts } from "@stores/debts/thunk";
+
 
 const StudentNegotiations: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -32,6 +35,8 @@ const StudentNegotiations: React.FC = () => {
 
   useEffect(() => {
     dispatch(listStudentNegotiations({ token }));
+    dispatch(listStudents({ token }))
+    dispatch(listDebts({ token }));
   }, []);
 
   const unselectStudentNegotiation = () => {

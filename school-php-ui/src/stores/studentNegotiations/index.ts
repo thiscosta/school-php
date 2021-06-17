@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Negotiation } from "@schoolApi/types/negotiation";
 import {
-  listNegotiations,
-  createNegotiation,
-  updateNegotiation,
-  deleteNegotiation,
-} from "@stores/negotiations/thunk";
+  deleteStudentNegotiation,
+  createStudentNegotiation,
+  updateStudentNegotiation,
+  listStudentNegotiations,
+} from "@stores/studentNegotiations/thunk";
 import { notify } from "react-notify-toast";
 
 interface StudentNegotiationState {
@@ -41,32 +41,32 @@ export const studentNegotiationSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(listNegotiations.pending, (state) => {
+    builder.addCase(listStudentNegotiations.pending, (state) => {
       state.finding = true;
     });
-    builder.addCase(listNegotiations.fulfilled, (state, action) => {
+    builder.addCase(listStudentNegotiations.fulfilled, (state, action) => {
       state.finding = false;
       state.negotiations = [...action.payload.negotiations];
     });
-    builder.addCase(listNegotiations.rejected, (state) => {
+    builder.addCase(listStudentNegotiations.rejected, (state) => {
       state.finding = false;
       state.negotiations = [];
     });
-    builder.addCase(createNegotiation.pending, (state) => {
+    builder.addCase(createStudentNegotiation.pending, (state) => {
       state.creating = true;
       state.created = false;
     });
-    builder.addCase(createNegotiation.fulfilled, (state, action) => {
+    builder.addCase(createStudentNegotiation.fulfilled, (state, action) => {
       state.creating = false;
       state.created = true;
       state.negotiations = [...state.negotiations, { ...action.payload.negotiation }];
       notify.show('Negociação criada com sucesso', 'success', 2000)
     });
-    builder.addCase(updateNegotiation.pending, (state) => {
+    builder.addCase(updateStudentNegotiation.pending, (state) => {
       state.updating = true;
       state.updated = false;
     });
-    builder.addCase(updateNegotiation.fulfilled, (state, action) => {
+    builder.addCase(updateStudentNegotiation.fulfilled, (state, action) => {
       state.updating = false;
       state.updated = true;
       state.editingNegotiation = null;
@@ -79,11 +79,11 @@ export const studentNegotiationSlice = createSlice({
       ];
       notify.show('Negociação atualizada com sucesso', 'success', 2000)
     });
-    builder.addCase(deleteNegotiation.pending, (state) => {
+    builder.addCase(deleteStudentNegotiation.pending, (state) => {
       state.removing = true;
       state.removed = false;
     });
-    builder.addCase(deleteNegotiation.fulfilled, (state, action) => {
+    builder.addCase(deleteStudentNegotiation.fulfilled, (state, action) => {
       state.removing = false;
       state.removed = true;
       state.negotiations = [

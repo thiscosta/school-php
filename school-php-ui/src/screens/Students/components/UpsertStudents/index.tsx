@@ -15,6 +15,12 @@ const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
   const [course, setCourse] = useState("");
   const [semester, setSemester] = useState("");
   const [responsible, setResponsible] = useState("");
+  const [zipcode, setZipCode] = useState("");
+  const [number, setNumber] = useState("");
+  const [street, setStreet] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setUF] = useState("");
 
   const student = useAppSelector((state) => state.students.editingStudent);
   const token = useAppSelector((state) => state.login.token);
@@ -27,6 +33,12 @@ const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
       setCourse(student?.course!);
       setSemester(student?.semester!);
       setResponsible(student?.responsible!);
+      setZipCode(student?.zipcode!);
+      setNumber(student?.number!);
+      setStreet(student?.street!);
+      setNeighborhood(student?.neighborhood!);
+      setCity(student?.city!);
+      setUF(student?.state!);
     }
 
     getInitialStudentParams();
@@ -37,12 +49,19 @@ const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
       setCourse("");
       setSemester("");
       setResponsible("");
+      setZipCode("");
+      setNumber("");
+      setStreet("");
+      setNeighborhood("");
+      setCity("");
+      setUF("");
     };
   }, [student]);
 
   const handleConfirm = async () => {
-    const modifiedStudent = { ...student, name, email, course, responsible, semester, ...(!student && { password }) };
-    const action  = student ? updateStudent : createStudent
+    const modifiedStudent = { ...student, name, email, course, responsible, semester, zipcode, number, street, neighborhood, city, state, ...(!student && { password }) };
+    const action  = student ? updateStudent : createStudent;
+
     dispatch(action({ student: modifiedStudent, token }))
     setOpen();
   };
@@ -104,6 +123,48 @@ const UpsertStudents: React.FC<UpsertStudentsProps> = ({ open, setOpen }) => {
               onChange={(_e, { value }) => {
                 setResponsible(value);
               }}
+            />
+          </Form.Group>
+          <Form.Group widths={3}>
+            <Form.Input
+              label="CEP"
+              placeholder="CEP"
+              value={zipcode}
+              onChange={(_e, { value }) => {
+                setZipCode(value);
+              }}
+            />
+            <Form.Input
+              label="Número"
+              placeholder="Número"
+              value={number}
+              onChange={(_e, { value }) => {
+                setNumber(value);
+              }}
+            />
+            <Form.Input
+              label="Rua"
+              placeholder="Rua"
+              value={street}
+              readOnly
+            />
+          </Form.Group>
+          <Form.Group widths={3}>
+            <Form.Input
+              label="Bairro"
+              placeholder="Bairro"
+              value={neighborhood}
+            />
+            <Form.Input
+              label="Cidade"
+              placeholder="Cidade"
+              value={city}
+            />
+            <Form.Input
+              label="Estado"
+              placeholder="Estado"
+              value={state}
+              readOnly
             />
           </Form.Group>
         </Form>

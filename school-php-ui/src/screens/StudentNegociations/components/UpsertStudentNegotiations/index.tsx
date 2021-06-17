@@ -9,8 +9,12 @@ interface UpsertStudentNegotiationsProps {
 }
 
 const UpsertStudentNegotiations: React.FC<UpsertStudentNegotiationsProps> = ({ open, setOpen }) => {
+  const [student, setStudent] = useState<number | null>();
+  const [debt, setDebt] = useState<number | null>();
   const [proposal, setProposal] = useState("");
-  const [debt, setDebt] = useState("");
+
+  const dropdownStudents = useAppSelector((state) => state.students.dropdownStudents);
+  const dropdownDebts = useAppSelector((state) => state.debts.dropdownDebts);
 
   const studentNegotiation = useAppSelector((state) => state.studentNegotiations.editingNegotiation);
   const token = useAppSelector((state) => state.login.token);
@@ -19,14 +23,16 @@ const UpsertStudentNegotiations: React.FC<UpsertStudentNegotiationsProps> = ({ o
   useEffect(() => {
     function getInitialStudentNegotiationParams() {
       setProposal(studentNegotiation?.proposal!);
-      setDebt(studentNegotiation?.debt!.id.toString() || "");
+      setDebt(studentNegotiation?.debt!.id || null);
+      setStudent(studentNegotiation?.student!.id || null);
     }
 
     getInitialStudentNegotiationParams();
 
     return () => {
       setProposal("");
-      setDebt("");
+      setDebt(null);
+      setStudent(null);
     };
   }, [studentNegotiation]);
 
@@ -35,26 +41,37 @@ const UpsertStudentNegotiations: React.FC<UpsertStudentNegotiationsProps> = ({ o
       ...studentNegotiation,
       proposal,
       debt_id: Number(debt),
+      student_id: Number(student),
       accepted: false,
       finished: false,
     };
     const action = studentNegotiation ? updateStudentNegotiation : createStudentNegotiation;
     dispatch(action({ negotiation: modifiedStudentNegotiation, token }));
     setOpen();
-  };
+    };
 
   return (
     <Modal open={open} onClose={setOpen} onOpen={setOpen}>
-      <Modal.Header>{studentNegotiation?.id || "Nova dívida"}</Modal.Header>
-      <Modal.Content scrolling>
+      <Modal.Header>{studentNegotiation?.id || "Nova negociação"}</Modal.Header>
+      <Modal.Content >
         <Form>
-          <Form.Group unstackable widths={2}>
-            <Form.Input
+          <Form.Group unstackable widths={3}>
+            <Form.Select
+              label="Aluno"
+              placeholder="Aluno"
+              options={dropdownStudents}
+              value={student!}
+              onChange={(_e, { value }) => {
+                setStudent(Number(value));
+              }}
+            />
+            <Form.Select
               label="Dívida"
               placeholder="Dívida"
-              value={debt}
+              options={dropdownDebts}
+              value={student!}
               onChange={(_e, { value }) => {
-                setDebt(value);
+                setDebt(Number(value));
               }}
             />
             <Form.Input

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "@stores/login/thunk";
+import { login, logout } from "@stores/login/thunk";
+import { notify } from "react-notify-toast";
 
 interface LoginState {
   logging: boolean;
@@ -21,6 +22,14 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(logout.fulfilled, (state) => {
+      state.logging = false;
+      state.logged = false;
+      state.token = "";
+      state.userName =  "";
+      state.userId =  0;
+      state.userProfile =  "";
+    });
     builder.addCase(login.pending, (state) => {
       state.logging = true;
       state.logged = false;
@@ -36,6 +45,15 @@ export const loginSlice = createSlice({
       state.userName = action.payload.user.name;
       state.userId = action.payload.user.id;
       state.userProfile = action.payload.user.profile;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.logging = false;
+      state.logged = false;
+      state.token = '';
+      state.userName =  '';
+      state.userId =  undefined;
+      state.userProfile =  '';
+      notify.show('Login inválido', 'error', 2000)
     });
   },
 });
