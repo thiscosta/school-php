@@ -21,16 +21,22 @@ class DebtsTableSeeder extends Seeder
     
         $faker = \Faker\Factory::create();
         $schoolsIds = DB::table('schools')->pluck('id');
-        $studentsIds = DB::table('students')->pluck('id');
+        
+        $studentId = DB::table('students')
+        ->select('students.*')
+        ->join('users', 'users.id', '=', 'students.user_id')
+        ->where('users.email', '=', 'user')
+        ->pluck('id')
+        ->first();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Debt::create([
                 'course' => $faker->company,
                 'semester' => $faker->numberBetween(1, 12),
                 'month' => $faker->numberBetween(1, 12),
                 'value' => $faker->randomDigit,
                 'status' => $faker->randomElement(['Ativo', 'Pendente']),
-                'student_id' => $faker->randomElement($studentsIds),
+                'student_id' => $studentId,
                 'school_id' => $faker->randomElement($schoolsIds)
             ]);
         }

@@ -20,15 +20,20 @@ class NegotiationsTableSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     
         $faker = \Faker\Factory::create();
-        $studentsIds = DB::table('students')->pluck('id');
+        $studentId = DB::table('students')
+        ->select('students.*')
+        ->join('users', 'users.id', '=', 'students.user_id')
+        ->where('users.email', '=', 'user')
+        ->pluck('id')
+        ->first();
         $debtsIds = DB::table('debts')->pluck('id');
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             Negotiation::create([
                 'proposal' => $faker->randomDigit,
                 'accepted' => $faker->boolean,
                 'finished' => $faker->boolean,
-                'student_id' => $faker->randomElement($studentsIds),
+                'student_id' => $studentId,
                 'debt_id' => $faker->randomElement($debtsIds)
             ]);
         }

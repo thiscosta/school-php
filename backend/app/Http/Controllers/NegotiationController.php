@@ -41,20 +41,20 @@ class NegotiationController extends Controller
     }
 
     public function create(Request $request) {
-        $negotiation = Negotiation::create($request->all());
+        $negotiation = Negotiation::with('student', 'debt')->create($request->all());
 
-        return response()->json($negotiation, 201);
+        return response()->json(Negotiation::with('student', 'debt')->findOrFail($negotiation->id), 201);
     }
 
     public function update(Request $request, $id) {
-        $negotiation = Negotiation::findOrFail($id);
+        $negotiation = Negotiation::with('student', 'debt')->findOrFail($id);
         $negotiation->update($request->all());
 
         return response()->json($negotiation, 200);
     }
 
     public function delete(Request $request, $id) {
-        $negotiation = Negotiation::findOrFail($id);
+        $negotiation = Negotiation::with('student', 'debt')->findOrFail($id);
         $negotiation->delete();
 
         return response()->json(null, 204);

@@ -19,6 +19,12 @@ class CreateStudentsTable extends Migration
             $table->string('email');
             $table->string('course');
             $table->string('semester');
+            $table->string('zipcode');
+            $table->string('street');
+            $table->string('number');
+            $table->string('neighborhood');
+            $table->string('city');
+            $table->string('state');
             $table->string('responsible');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

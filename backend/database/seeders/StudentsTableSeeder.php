@@ -28,6 +28,12 @@ class StudentsTableSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'course' => 'Sistemas',
                 'semester' => '7',
+                'zipcode' => $faker->postcode,
+                'street' => $faker->streetName,
+                'number' => $faker->buildingNumber,
+                'neighborhood' => $faker->city,
+                'city' => $faker->city,
+                'state' => $faker->state,
                 'responsible' => $faker->name,
                 'user_id' => $faker->unique()->randomElement($usersIds)
             ]);
