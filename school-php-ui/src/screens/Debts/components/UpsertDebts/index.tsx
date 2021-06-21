@@ -28,7 +28,8 @@ const UpsertDebts: React.FC<UpsertDebtsProps> = ({ open, setOpen }) => {
       setCourse(debt?.course!);
       setSemester(debt?.semester.toString() || "");
       setStatus(debt?.status!);
-      setMonth(debt?.month!.toString() || "1")
+      setMonth(debt?.month!.toString() || "1");
+      console.log(dropdownStudents);
     }
 
     getInitialDebtParams();

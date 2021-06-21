@@ -53,7 +53,7 @@ export const studentSlice = createSlice({
         return {
           key: student.id,
           value: student.id,
-          text: student.user?.name
+          text: student?.name
         }
       })]
     });
